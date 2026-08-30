@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const StatsBlockComponent = ({ block }: { block: any }) => (
-  <section id="facts" className="px-12 pb-[104px]">
+  <section id="facts" className="scroll-mt-[130px] px-12 pb-[104px]">
     <div className="max-w-[1240px] mx-auto">
       <div className="dbl" />
       <div className="grid grid-cols-4">

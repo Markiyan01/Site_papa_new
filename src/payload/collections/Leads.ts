@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { Resend } from 'resend'
 
 export const Leads: CollectionConfig = {
   slug: 'leads',
@@ -19,21 +20,34 @@ export const Leads: CollectionConfig = {
       async ({ doc, req, operation }) => {
         if (operation === 'create') {
           try {
-            // Placeholder for Resend integration
-            req.payload.logger.info(`Sending email for new lead: ${doc.name} (${doc.email}) via Resend...`)
-            
-            // Example of Resend integration:
-            /*
+            if (!process.env.RESEND_API_KEY) {
+              req.payload.logger.warn(`RESEND_API_KEY not set — skipping email for lead ${doc.id}`)
+              return
+            }
+
+            const areaLabels: Record<string, string> = {
+              up_to_30: 'До 30 м²',
+              '30_60': '30–60 м²',
+              '60_plus': '60+ м²',
+            }
+
             const resend = new Resend(process.env.RESEND_API_KEY)
             await resend.emails.send({
-              from: 'noreply@rozmaryn.com',
-              to: 'sales@rozmaryn.com',
+              from: 'Розмарин — заявки <onboarding@resend.dev>',
+              to: process.env.LEADS_NOTIFY_EMAIL || 'tsvigunmarkiyan04@gmail.com',
               subject: `Нова заявка з сайту від ${doc.name}`,
-              html: `<p>Нова заявка: ${doc.message}</p>`
+              html: `
+                <h2>Нова заявка на оренду</h2>
+                <p><b>Ім'я:</b> ${doc.name}</p>
+                ${doc.phone ? `<p><b>Телефон:</b> ${doc.phone}</p>` : ''}
+                ${doc.email ? `<p><b>Email:</b> ${doc.email}</p>` : ''}
+                ${doc.area ? `<p><b>Бажана площа:</b> ${areaLabels[doc.area] || doc.area}</p>` : ''}
+                ${doc.message ? `<p><b>Коментар:</b> ${doc.message}</p>` : ''}
+              `,
             })
-            */
+            req.payload.logger.info(`Lead notification email sent for lead ${doc.id}`)
           } catch (error) {
-            req.payload.logger.error(`Error sending email for lead ${doc.id}:`, error)
+            req.payload.logger.error(`Error sending email for lead ${doc.id}: ${error}`)
           }
         }
       },
@@ -48,6 +62,11 @@ export const Leads: CollectionConfig = {
     {
       name: 'phone',
       type: 'text',
+      validate: (value: unknown) => {
+        if (!value) return 'Вкажіть телефон'
+        const normalized = String(value).replace(/[\s\-()]/g, '')
+        return /^(\+?380\d{9}|0\d{9})$/.test(normalized) || 'Некоректний номер телефону. Приклад: +380671234567'
+      },
     },
     {
       name: 'email',

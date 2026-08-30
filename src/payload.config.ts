@@ -1,5 +1,6 @@
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -29,6 +30,16 @@ export default buildConfig({
   collections: [Users, Media, Businesses, BusinessCategories, Offices, Pages, Leads, Reviews],
   globals: [SiteSettings],
   editor: lexicalEditor(),
+  // На Vercel файлова система ефемерна — коли є токен Vercel Blob, фото зберігаються
+  // там замість локального диска. Без токена (локальна розробка) працює як раніше.
+  plugins: process.env.BLOB_READ_WRITE_TOKEN
+    ? [
+        vercelBlobStorage({
+          collections: { media: true },
+          token: process.env.BLOB_READ_WRITE_TOKEN,
+        }),
+      ]
+    : [],
   secret: process.env.PAYLOAD_SECRET || 'secret-key-for-local-dev-only-do-not-use-in-prod',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

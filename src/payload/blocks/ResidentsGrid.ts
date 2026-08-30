@@ -6,6 +6,6 @@ export const ResidentsGridBlock: Block = {
   fields: [
     { name: 'title', type: 'text', defaultValue: 'Компанії центру' },
     { name: 'note', type: 'text' },
-    { name: 'limit', type: 'number', defaultValue: 12 },
+    { name: 'limit', label: 'Макс. кількість резидентів (усього)', type: 'number', defaultValue: 100 },
   ],
 }

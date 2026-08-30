@@ -15,7 +15,7 @@ export const HeroBlockComponent = ({ block }: { block: any }) => {
     <section className="px-12 pt-14 relative">
       <div className="max-w-[1240px] mx-auto relative">
         <div className="absolute -left-3.5 top-20 [writing-mode:vertical-rl] rotate-180 text-[11px] uppercase tracking-[0.32em] text-[#a9a495]">
-          {block.rail || 'Лесі Українки 31Г — від 18 до 120 м²'}
+          {block.rail || "Лесі Українки 31Г, Кам'янець-Подільський — від 18 до 120 м²"}
         </div>
 
         <div className="frame p-[9px] bg-white">
@@ -40,10 +40,16 @@ export const HeroBlockComponent = ({ block }: { block: any }) => {
                 <p className="text-[17px] leading-[1.8] text-paper/90 mb-[34px] max-w-[460px]">{block.subheading}</p>
               )}
               <div className="flex gap-3.5 items-center">
-                <a href={block.ctaLink || '#lead'} className="px-[34px] py-4 bg-paper text-ink text-xs uppercase tracking-[0.2em]">
+                <a
+                  href={block.ctaLink || '#lead'}
+                  className="btn-lift px-[34px] py-4 bg-paper text-ink text-xs uppercase tracking-[0.2em] hover:bg-green hover:text-paper"
+                >
                   {block.ctaText || 'Залишити заявку'}
                 </a>
-                <a href="#offices" className="px-[30px] py-4 border border-paper/50 text-paper text-xs uppercase tracking-[0.2em]">
+                <a
+                  href="#offices"
+                  className="btn-lift px-[30px] py-4 border border-paper/50 text-paper text-xs uppercase tracking-[0.2em] hover:bg-paper/10 hover:border-paper hover:text-paper"
+                >
                   Вільні офіси
                 </a>
               </div>

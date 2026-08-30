@@ -11,7 +11,7 @@ export const ReviewsBlockComponent = async ({ block }: { block: any }) => {
   const rest = docs.filter((r: any) => r.id !== featured.id).slice(0, 2)
 
   return (
-    <section id="reviews" className="bg-green text-[#eae6dc] px-12 py-[100px]">
+    <section id="reviews" className="scroll-mt-[130px] bg-green text-[#eae6dc] px-12 py-[100px]">
       <div className="max-w-[1240px] mx-auto">
         <div className="flex items-center gap-4 mb-11">
           <span className="font-display text-[22px] text-[#eae6dc]/70">V</span>

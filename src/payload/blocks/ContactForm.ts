@@ -18,6 +18,12 @@ export const ContactFormBlock: Block = {
       label: 'Опис',
       type: 'textarea',
     },
+    {
+      name: 'mapAddress',
+      label: 'Адреса для карти (Адреса на сайті, точка на мапі й маршрут)',
+      type: 'text',
+      defaultValue: "м. Кам'янець-Подільський, Хмельницька обл., вул. Лесі Українки, 31Г",
+    },
   ],
 }
 

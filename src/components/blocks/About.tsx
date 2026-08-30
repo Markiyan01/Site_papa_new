@@ -1,7 +1,7 @@
 import React from 'react'
 
 export const AboutBlockComponent = ({ block }: { block: any }) => (
-  <section id="about" className="px-12 py-[104px]">
+  <section id="about" className="scroll-mt-[130px] px-12 py-[104px]">
     <div className="max-w-[1240px] mx-auto grid grid-cols-[0.85fr_1.15fr] gap-[72px] items-start">
       <div>
         <div className="frame p-[9px] bg-white">
@@ -10,7 +10,7 @@ export const AboutBlockComponent = ({ block }: { block: any }) => (
             style={{ backgroundImage: `url(${block.image?.url || ''})` }}
           />
         </div>
-        <div className="kicker mt-3 text-right">{block.caption || 'Фасад · вул. Лесі Українки, 31Г'}</div>
+        <div className="kicker mt-3 text-right">{block.caption || "Фасад · вул. Лесі Українки, 31Г, Кам'янець-Подільський"}</div>
       </div>
 
       <div className="pt-3">

@@ -24,46 +24,116 @@
   --foreground: #23241f;
 }
 
-body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+/*
+  Усе нижче навмисно у @layer base / @layer components (не голі селектори).
+  Tailwind v4 розкладає власні стилі по cascade layers (theme, base, components,
+  utilities) — будь-яке неш layered-правило в звичайному CSS-файлі має
+  пріоритет НАД усіма layered-стилями Tailwind незалежно від специфічності чи
+  порядку в файлі. Раніше через це, наприклад, `a { color }` перебивав
+  `text-[#eae6dc]` на посиланнях, а `.kicker { font-size }` — `text-[10px]`.
+*/
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    margin: 0;
+  }
+
+  a { color: #3f5a3c; text-decoration: none; transition: color 0.25s ease; }
+  a:hover { color: #23241f; }
+
+  :focus-visible { outline: 2px solid #3f5a3c; outline-offset: 2px; }
+  ::selection { background: rgba(63, 90, 60, 0.18); }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-display);
-  font-weight: 500;
-  letter-spacing: 0.01em;
-  margin: 0;
+@layer components {
+  /* Дрібний трекінговий надпис над заголовками */
+  .kicker {
+    font-family: var(--font-sans);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: #8a8778;
+  }
+
+  /* Тонка рамка навколо фотографій і карток */
+  .frame { border: 1px solid #d9d3c6; }
+
+  /* Подвійна лінійка над/під блоком цифр */
+  .dbl { border-top: 3px double #c9c2b2; }
+
+  /* Буквиця у вступному абзаці */
+  .dropcap::first-letter {
+    font-family: var(--font-display);
+    font-size: 76px;
+    line-height: 0.78;
+    float: left;
+    padding: 6px 14px 0 0;
+    color: #3f5a3c;
+  }
+
+  /* Underline, що "виїжджає" зліва на ховер і ховається праворуч на виході */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -3px;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.35s ease;
+  }
+  .link-underline:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  /* Легкий "ліфт" для кнопок: підйом + тінь на ховер, натискання на клік */
+  .btn-lift {
+    transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+  }
+  .btn-lift:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px -10px rgba(35, 36, 31, 0.35);
+  }
+  .btn-lift:active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* Легкий "ліфт" для карток */
+  .card-lift {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 32px -18px rgba(35, 36, 31, 0.28);
+  }
 }
-
-a { color: #3f5a3c; text-decoration: none; }
-a:hover { color: #23241f; }
-
-/* Дрібний трекінговий надпис над заголовками */
-.kicker {
-  font-family: var(--font-sans);
-  font-size: 11px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: #8a8778;
-}
-
-/* Тонка рамка навколо фотографій і карток */
-.frame { border: 1px solid #d9d3c6; }
-
-/* Подвійна лінійка над/під блоком цифр */
-.dbl { border-top: 3px double #c9c2b2; }
-
-/* Буквиця у вступному абзаці */
-.dropcap::first-letter {
-  font-family: var(--font-display);
-  font-size: 76px;
-  line-height: 0.78;
-  float: left;
-  padding: 6px 14px 0 0;
-  color: #3f5a3c;
-}
-
-:focus-visible { outline: 2px solid #3f5a3c; outline-offset: 2px; }
-::selection { background: rgba(63, 90, 60, 0.18); }

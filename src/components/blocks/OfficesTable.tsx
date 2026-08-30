@@ -19,7 +19,7 @@ export const OfficesTableBlockComponent = async ({ block }: { block: any }) => {
   const { docs: offices } = await payload.find({ collection: 'offices', where, limit: 20, sort: 'floor' })
 
   return (
-    <section id="offices" className="px-12 py-[104px]">
+    <section id="offices" className="scroll-mt-[130px] px-12 py-[104px]">
       <div className="max-w-[1240px] mx-auto">
         <div className="flex items-end justify-between gap-10 mb-10">
           <div>
@@ -50,14 +50,14 @@ export const OfficesTableBlockComponent = async ({ block }: { block: any }) => {
             </thead>
             <tbody>
               {offices.map((o: any) => (
-                <tr key={o.id}>
+                <tr key={o.id} className="transition-colors hover:bg-sand/60">
                   <td className={`${TD} pl-0 font-display text-[26px]`}>{o.officeNumber}</td>
                   <td className={TD}>{o.floor}</td>
                   <td className={TD}>{o.area} м²</td>
                   <td className={`${TD} text-muted italic`}>{LAYOUT[o.layoutType] || '—'}</td>
                   <td className={TD}>{o.price || 'За запитом'}</td>
                   <td className={`${TD} pr-0 text-right`}>
-                    <a href="#lead" className="text-[11px] uppercase tracking-[0.18em]">Огляд →</a>
+                    <a href="#lead" className="link-underline text-[11px] uppercase tracking-[0.18em]">Огляд →</a>
                   </td>
                 </tr>
               ))}
