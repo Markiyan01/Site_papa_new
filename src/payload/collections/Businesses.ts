@@ -2,8 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const Businesses: CollectionConfig = {
   slug: 'businesses',
+  labels: { singular: 'Бізнес', plural: 'Бізнеси' },
   admin: {
     useAsTitle: 'title',
+    group: 'Каталог',
+    description:
+      'Компанії-резиденти центру. Ці картки показуються в блоці "Компанії центру" (residentsGrid) на сайті та на публічній сторінці /businesses/[slug].',
+    defaultColumns: ['title', 'floor', 'officeNumber', 'workingHours'],
   },
   access: {
     read: () => true,

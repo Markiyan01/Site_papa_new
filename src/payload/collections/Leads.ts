@@ -2,8 +2,13 @@ import type { CollectionConfig } from 'payload'
 
 export const Leads: CollectionConfig = {
   slug: 'leads',
+  labels: { singular: 'Заявка', plural: 'Заявки' },
   admin: {
     useAsTitle: 'name',
+    group: 'Заявки',
+    description:
+      'Заявки з форми на сайті (блок contactForm → /api/leads). Створювати може будь-хто (публічна форма), переглядати — лише залогінені користувачі.',
+    defaultColumns: ['name', 'phone', 'area', 'status', 'createdAt'],
   },
   access: {
     create: () => true, // Public can create leads
@@ -51,6 +56,16 @@ export const Leads: CollectionConfig = {
     {
       name: 'message',
       type: 'textarea',
+    },
+    {
+      name: 'area',
+      label: 'Бажана площа',
+      type: 'select',
+      options: [
+        { label: 'До 30 м²', value: 'up_to_30' },
+        { label: '30–60 м²', value: '30_60' },
+        { label: '60+ м²', value: '60_plus' },
+      ],
     },
     {
       name: 'status',

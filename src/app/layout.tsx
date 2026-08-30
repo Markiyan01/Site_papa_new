@@ -1,27 +1,8 @@
-import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
-
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin", "cyrillic"],
-});
-
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
-  subsets: ["latin", "cyrillic"],
-});
-
+// Навмисно без <html>/<body> тут: (frontend) і (payload) — окремі route groups,
+// кожна зі своїм власним <html> (Payload RootLayout вимагає це для /admin).
+// Обгортання тут спричиняло hydration-помилку "вкладений <html>" на /admin.
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="uk" className={`${inter.variable} ${playfair.variable}`}>
-      <body className="antialiased font-sans bg-paper text-graphite min-h-screen">
-        {children}
-      </body>
-    </html>
-  );
+}: Readonly<{ children: React.ReactNode }>) {
+  return children;
 }
-

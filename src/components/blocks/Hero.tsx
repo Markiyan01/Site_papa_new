@@ -1,34 +1,65 @@
 import React from 'react'
 
+type Fact = { value: string; label: string }
+
 export const HeroBlockComponent = ({ block }: { block: any }) => {
+  const facts: Fact[] = block.facts?.length
+    ? block.facts
+    : [
+        { value: '5', label: 'Поверхів' },
+        { value: '100', label: 'Офісів' },
+        { value: '50', label: 'Паркомісць' },
+      ]
+
   return (
-    <section className="relative w-full h-[80vh] flex items-center justify-center overflow-hidden">
-      {/* Background Image logic here, assuming URL for now */}
-      <div 
-        className="absolute inset-0 z-0 bg-cover bg-center"
-        style={{ backgroundImage: `url(${block.backgroundImage?.url || ''})` }}
-      />
-      <div className="absolute inset-0 bg-black/40 z-10" />
-      
-      <div className="relative z-20 text-center px-4 max-w-4xl mx-auto">
-        <h1 className="text-5xl md:text-7xl font-serif text-white mb-6 drop-shadow-md">
-          {block.heading}
-        </h1>
-        {block.subheading && (
-          <p className="text-xl md:text-2xl text-paper mb-10 font-light tracking-wide">
-            {block.subheading}
-          </p>
-        )}
-        {block.ctaText && (
-          <a 
-            href={block.ctaLink || '#'} 
-            className="inline-block px-8 py-4 bg-rosemary hover:bg-rosemary-dark text-white font-medium rounded-sm transition-colors shadow-lg"
+    <section className="px-12 pt-14 relative">
+      <div className="max-w-[1240px] mx-auto relative">
+        <div className="absolute -left-3.5 top-20 [writing-mode:vertical-rl] rotate-180 text-[11px] uppercase tracking-[0.32em] text-[#a9a495]">
+          {block.rail || 'Лесі Українки 31Г — від 18 до 120 м²'}
+        </div>
+
+        <div className="frame p-[9px] bg-white">
+          <div
+            className="relative h-[620px] bg-cover bg-[center_42%]"
+            style={{ backgroundImage: `url(${block.backgroundImage?.url || ''})` }}
           >
-            {block.ctaText}
-          </a>
-        )}
+            <div className="absolute inset-0 bg-[linear-gradient(105deg,rgba(35,36,31,0.62)_0%,rgba(35,36,31,0.28)_55%,rgba(35,36,31,0.1)_100%)]" />
+            <div className="relative h-full flex flex-col justify-center px-[68px] max-w-[760px]">
+              <div className="kicker text-paper/80">{block.kicker || 'Оренда офісів у центрі міста'}</div>
+              <h1 className="text-[78px] leading-[1.02] mt-[22px] text-paper">
+                {block.heading}
+                {block.headingItalic && (
+                  <>
+                    <br />
+                    <span className="italic font-normal">{block.headingItalic}</span>
+                  </>
+                )}
+              </h1>
+              <div className="w-24 h-px bg-paper/55 my-7" />
+              {block.subheading && (
+                <p className="text-[17px] leading-[1.8] text-paper/90 mb-[34px] max-w-[460px]">{block.subheading}</p>
+              )}
+              <div className="flex gap-3.5 items-center">
+                <a href={block.ctaLink || '#lead'} className="px-[34px] py-4 bg-paper text-ink text-xs uppercase tracking-[0.2em]">
+                  {block.ctaText || 'Залишити заявку'}
+                </a>
+                <a href="#offices" className="px-[30px] py-4 border border-paper/50 text-paper text-xs uppercase tracking-[0.2em]">
+                  Вільні офіси
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="frame bg-paper -mt-14 ml-auto w-[min(660px,92%)] px-2 py-[26px] grid grid-cols-3 relative z-[2]">
+          {facts.map((f, i) => (
+            <div key={i} className="text-center px-[18px] border-r border-line-soft last:border-r-0">
+              <div className="font-display text-[40px] leading-none text-green">{f.value}</div>
+              <div className="kicker mt-2 text-[10px]">{f.label}</div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
 }
-

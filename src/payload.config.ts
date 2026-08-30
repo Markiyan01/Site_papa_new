@@ -9,6 +9,7 @@ import { Leads } from './payload/collections/Leads'
 import { Media } from './payload/collections/Media'
 import { Offices } from './payload/collections/Offices'
 import { Pages } from './payload/collections/Pages'
+import { Reviews } from './payload/collections/Reviews'
 import { Users } from './payload/collections/Users'
 import { SiteSettings } from './payload/globals/SiteSettings'
 
@@ -18,11 +19,14 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     user: Users.slug,
+    meta: {
+      titleSuffix: ' — Розмарин CMS',
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Businesses, BusinessCategories, Offices, Pages, Leads],
+  collections: [Users, Media, Businesses, BusinessCategories, Offices, Pages, Leads, Reviews],
   globals: [SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || 'secret-key-for-local-dev-only-do-not-use-in-prod',
